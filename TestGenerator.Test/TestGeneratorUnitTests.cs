@@ -32,7 +32,7 @@ public class TestGeneratorUnitTest
             namespace TestGenerator
             {
                 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
-                public class TestSourceGeneratorAttribute : Attribute;
+                internal sealed class TestSourceGeneratorAttribute : Attribute;
             }
 
             """;
