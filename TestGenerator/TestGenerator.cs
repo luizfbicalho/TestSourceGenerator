@@ -28,6 +28,23 @@ public class TestGenerator : IIncrementalGenerator
             .Where(static m => m is not null);
         var compilationAndClasses = classDeclarations.Collect();
 
+        context.RegisterPostInitializationOutput(
+            context =>
+            {
+                context.AddSource(
+                    "TestSourceGeneratorAttribute.g.cs",
+                    """
+                    using System;
+
+                    namespace TestGenerator
+                    {
+                        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
+                        public class TestSourceGeneratorAttribute : Attribute;
+                    }
+
+                    """);
+            });
+
         // Set up the generation phase
         context.RegisterSourceOutput(compilationAndClasses, static (spc, classes) =>
         {
